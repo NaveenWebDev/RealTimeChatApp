@@ -11,9 +11,19 @@ function App() {
   const db = getDatabase();
   const chatlist = ref(db, "chat");
 
+  const updateHeight = ()=>{
+    const el = document.getElementById("chat");
+    if(el){
+      el.scrollTop = el.scrollHeight;
+    }
+  }
+
   useEffect(()=>{
     onChildAdded(chatlist, (data) => {
       setChat(chat=>[...chat,data.val()])
+      setTimeout(() => {
+        updateHeight();
+      }, 100);
     });
   },[])
 
@@ -42,7 +52,7 @@ function App() {
       <div> 
 
       <h2>User: {name}</h2>
-      <div className="chat-container">
+      <div id="chat" className="chat-container">
 
       { chat.map( c=><div key={c.i} className={`container ${c.name===name? 'me' :''}`}>
         <p className='chatbox'>

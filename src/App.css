@@ -16,7 +16,7 @@
   color: wheat;
 }
 .btn{
-  position: sticky;
+  position: fixed;
   width: 100%;
   bottom: 0;
   display: flex;
@@ -27,4 +27,9 @@
 }
 .btn button{
   flex: 0.3 1;
+}
+.chat-container{
+  height: 80vh;
+  overflow-y: scroll;
+  border: 1px solid black;
 }
