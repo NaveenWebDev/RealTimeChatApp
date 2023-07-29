@@ -16,7 +16,7 @@
   color: wheat;
 }
 .btn{
-  position: fixed;
+  position: sticky;
   width: 100%;
   bottom: 0;
   display: flex;
