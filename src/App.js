@@ -1,10 +1,41 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { getDatabase, ref, push, set, onChildAdded } from "firebase/database";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 function App() {
 
-  const [name, setName] = useState("");
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+
+  const googleLogin = () =>{
+
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    setName({user:result.user.displayName, email:result.user.email })
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+    console.log(token, user);
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+}
+  
+  // =========auth completed=========
+
+  const [user, setName] = useState("");
   const [chat, setChat] = useState([]);
   const [msg, setMsg] = useState('');
 
@@ -31,7 +62,7 @@ function App() {
   const sendchat = ()=>{
     const chatref = push(chatlist);
     set(chatref,{
-      name, message:msg
+      user, message:msg
     })
 
     setMsg("")
@@ -40,33 +71,26 @@ function App() {
   return (
     <div className="App">
 
+      {user.email?null:
       <div>
-      {name?null:
-
-        <input type="text" placeholder='enter your name' onBlur={e=>setName(e.target.value)} />
-      }
+        <input type="text" placeholder='enter your user' onBlur={e=>setName(e.target.value)} />
+        <button onClick={e=>{googleLogin()}}>signInWithGoogle</button>
       </div>
+      }
       
       {
-        name?
+        user?
       <div> 
 
-      <h2>User: {name}</h2>
+      <h2>User: {user.user}</h2>
       <div id="chat" className="chat-container">
 
-      { chat.map( c=><div key={c.i} className={`container ${c.name===name? 'me' :''}`}>
+      { chat.map( c=><div key={c.i} className={`container ${c.user.email===user.email? 'me' :''}`}>
         <p className='chatbox'>
-          <strong>{c.name}:</strong>
+          <strong>{c.user.user}:</strong>
           <span>{c.message}</span>
         </p>
       </div>)}
-      
-      {/* <div className='container'>
-        <p className='chatbox'>
-          <strong>name:</strong>
-          <span>Chat Message</span>
-        </p>
-      </div> */}
 
       </div>
       <div className='btn'>
