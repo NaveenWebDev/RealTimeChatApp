@@ -1,9 +1,10 @@
 
 .chatbox{
-  background-color: aqua;
+  background-color: rgb(7, 7, 7);
+  color: white;
   padding: 1rem;
   margin: 1rem 0;
-  border: 2px solid gray;
+  border-radius: 0 30px 0 0;
 }
 .container{
   display: flex;
@@ -12,8 +13,8 @@
   flex-direction: row-reverse;
 }
 .me .chatbox{
-  background-color: darkblue;
-  color: wheat;
+  background-color: rgba(7, 7, 7, 0.774);
+  color: white;
 }
 .btn{
   position: fixed;
@@ -25,11 +26,67 @@
   flex: 1 1;
   padding: 1rem;
 }
+.btn input:focus{
+  outline: none;
+}
 .btn button{
   flex: 0.3 1;
+  background-color: rgba(0, 0, 0, 0.938);
+  color: white;
+  border: none;
 }
 .chat-container{
-  height: 80vh;
+  height: 88vh;
   overflow-y: scroll;
-  border: 1px solid black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.123),rgba(0, 0, 0, 0.37));
+}
+#userName{
+ text-align: center;
+ background-color: silver;
+ color: rgba(0, 0, 0, 0.800);
+ font-family: sans-serif;
+}
+.signgo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: rgba(0, 0, 0, 0.800);
+  color: white;
+  cursor: pointer;
+  font-weight: bolder;
+  border-radius: 10px;
+  border: none;
+  transition: all 0.5s;
+}
+.signgo:hover{
+  background-color: rgba(0, 0, 0);
+    border-radius: 20px;
+}
+/* ==========signin====== */
+
+.signIn{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.781), silver);
+}
+.signIn h1{
+  color: white;
+  font-size: 5rem;
+  font-family: sans-serif;
+  text-align: center;
+}
+.signIn button{
+  width: 30%;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+@media (max-width:500px) {
+  .signgo{
+    flex-direction: column;
+  }
 }

@@ -20,7 +20,6 @@ function App() {
     setName({user:result.user.displayName, email:result.user.email })
     // IdP data available using getAdditionalUserInfo(result)
     // ...
-    console.log(token, user);
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -72,9 +71,11 @@ function App() {
     <div className="App">
 
       {user.email?null:
-      <div>
-        <input type="text" placeholder='enter your user' onBlur={e=>setName(e.target.value)} />
-        <button onClick={e=>{googleLogin()}}>signInWithGoogle</button>
+      <div className='signIn'>
+        <h1>Chat App</h1>
+        <button onClick={e=>{googleLogin()}} className='signgo'> <span>Sign In With Google</span>  
+          <img src="https://static.vecteezy.com/system/resources/previews/012/871/371/original/google-search-icon-google-product-illustration-free-png.png" alt="google logo" width="30px" />
+         </button>
       </div>
       }
       
@@ -82,7 +83,7 @@ function App() {
         user?
       <div> 
 
-      <h2>User: {user.user}</h2>
+      <h2 id="userName">User: {user.user}</h2>
       <div id="chat" className="chat-container">
 
       { chat.map( c=><div key={c.i} className={`container ${c.user.email===user.email? 'me' :''}`}>
@@ -94,7 +95,7 @@ function App() {
 
       </div>
       <div className='btn'>
-        <input type="text" placeholder='enter you message' value={msg} onInput={e=>setMsg(e.target.value)} />
+        <input type="text" placeholder='enter you message' required value={msg} onInput={e=>setMsg(e.target.value)} />
         <button onClick={e=>sendchat()}>Send</button>
       </div>
     </div>
